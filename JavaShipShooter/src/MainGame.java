@@ -1,5 +1,7 @@
 /**
  * 
+ * Shooter game in Java by Scott King
+ * 
  */
 
 /**
@@ -21,7 +23,7 @@ public class MainGame extends JFrame implements KeyListener, ActionListener
 	private JButton pauseButton;
 	private boolean isRunning = false;
 	private boolean paused = false;
-	private boolean upkey, leftkey, rightkey, downkey = false;
+	private boolean upkey, leftkey, rightkey = false;
 	private int fps = 60;
 	private int frameCount = 0;
 	
@@ -71,8 +73,6 @@ public class MainGame extends JFrame implements KeyListener, ActionListener
 			rightkey = true;
 	     else if(e.getKeyCode()== KeyEvent.VK_LEFT)
 	    	leftkey = true;
-	     else if(e.getKeyCode()== KeyEvent.VK_DOWN)
-	        downkey = true;
 	     else if(e.getKeyCode()== KeyEvent.VK_UP)
 	        upkey = true;
 	}
@@ -85,8 +85,6 @@ public class MainGame extends JFrame implements KeyListener, ActionListener
 			rightkey = false;
 	    else if(e.getKeyCode()== KeyEvent.VK_LEFT)
 	    	leftkey = false;
-	    else if(e.getKeyCode()== KeyEvent.VK_DOWN)
-	        downkey = false;
 	    else if(e.getKeyCode()== KeyEvent.VK_UP)
 	        upkey = false;
 	}
@@ -102,22 +100,17 @@ public class MainGame extends JFrame implements KeyListener, ActionListener
 	{
 		if (upkey)
 		{
-			ship.moveUp();
+			ship.accelerate();
 		}
 		
 		if (leftkey)
 		{
-			ship.moveLeft();
+			ship.rotateLeft();
 		}
 		
 		if (rightkey)
 		{
-			ship.moveRight();
-		}
-		
-		if (downkey)
-		{
-			ship.moveDown();
+			ship.rotateRight();
 		}
 	}
 
@@ -154,8 +147,6 @@ public class MainGame extends JFrame implements KeyListener, ActionListener
 	               updateCount++;
 	            }
 	   
-	            //If for some reason an update takes forever, we don't want to do an insane number of catchups.
-	            //If you were doing some sort of game that needed to keep EXACT time, you would get rid of this.
 	            if ( now - lastUpdateTime > TIME_BETWEEN_UPDATES)
 	            {
 	               lastUpdateTime = now - TIME_BETWEEN_UPDATES;
@@ -180,9 +171,6 @@ public class MainGame extends JFrame implements KeyListener, ActionListener
 	            {
 	               Thread.yield();
 	            
-	               //This stops the app from consuming all your CPU. It makes this slightly less accurate, but is worth it.
-	               //You can remove this line and it will still work (better), your CPU just climbs on certain OSes.
-	               //FYI on some OS's this can cause pretty bad stuttering. Scroll down and have a look at different peoples' solutions to this.
 	               try {Thread.sleep(1);} catch(Exception e) {} 
 	            
 	               now = System.nanoTime();
