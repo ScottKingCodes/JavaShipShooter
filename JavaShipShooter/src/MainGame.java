@@ -12,7 +12,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 import javax.swing.JButton;
 
 public class MainGame extends JFrame implements KeyListener, ActionListener
@@ -112,6 +111,7 @@ public class MainGame extends JFrame implements KeyListener, ActionListener
 		{
 			ship.rotateRight();
 		}
+		
 	}
 
 	//Only run this in another Thread!
@@ -154,6 +154,7 @@ public class MainGame extends JFrame implements KeyListener, ActionListener
 	         
 	    
 	            ship.updatePosition();
+	            
 	            keyCheck();
 	            lastRenderTime = now;
 	         
